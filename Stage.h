@@ -1,10 +1,13 @@
 #pragma once
 #include "Engine/GameObject.h"
 
+class Quad;
+
 //◆◆◆を管理するクラス
 class Stage : public GameObject
 {
     int hModel_;    //モデル番号
+    Quad* pQuad_;
 public:
     //コンストラクタ
     Stage(GameObject* parent);

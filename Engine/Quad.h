@@ -1,34 +1,31 @@
 #pragma once
 
 #include <DirectXMath.h>
+#include <vector>
+#include <string>
 #include "Direct3D.h"
 #include "Texture.h"
-#include <vector>
 #include "Transform.h"
 
 using namespace DirectX;
 
 //コンスタントバッファー
-struct CONSTANT_BUFFER
-{
+struct CONSTANT_BUFFER {
 	XMMATRIX	matWVP;
 	XMMATRIX	matNormal; //matWからNormal用に改名
 };
 
-struct VERTEX
-{
+struct VERTEX {
 	XMVECTOR postion;
 	XMVECTOR uv;
 	XMVECTOR normal;
-
 };
 
-class Quad
-{
+class Quad {
 protected:
 	int vertexNum_;
 	std::vector<VERTEX> vertices_;
-	int indexNum_;//インデックス数
+	int indexNum_;			//インデックス数
 	std::vector<int> index_;//インデックス情報
 
 	ID3D11Buffer* pVertexBuffer_;	//頂点バッファ
@@ -38,7 +35,7 @@ protected:
 public:
 	Quad();
 	~Quad();
-	HRESULT Initialize();
+	HRESULT Initialize(std::string filename);
 	void Draw(Transform& transform );
 	void Release();
 
@@ -48,7 +45,7 @@ private:
 	virtual void InitIndexData();
 	HRESULT CreateIndexBuffer();
 	HRESULT CreateConstantBuffer();
-	HRESULT LoadTexture();
+	HRESULT LoadTexture(std::string filename);
 
 	//---------Draw関数から呼ばれる関数---------
 	void PassDataToCB(Transform transform);	//コンスタントバッファに各種情報を渡す
