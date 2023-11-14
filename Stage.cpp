@@ -21,7 +21,11 @@ void Stage::Initialize()
     assert(hModel_ >= 0);
 
     pQuad_ = new Quad();
-    pQuad_->Initialize("dancingAnimal.jpg");
+    pQuad_->Initialize("resize_balloon.png");
+
+    transform_.scale_.x *= 2;
+    transform_.scale_.y *= 2;
+    transform_.scale_.z *= 2;
 }
 
 //XV
@@ -33,8 +37,8 @@ void Stage::Update()
 //•`‰æ
 void Stage::Draw()
 {
-    Model::SetTransform(hModel_, transform_);
-    Model::Draw(hModel_);
+    //Model::SetTransform(hModel_, transform_);
+    //Model::Draw(hModel_);
 
     pQuad_->Draw(transform_);
 }
