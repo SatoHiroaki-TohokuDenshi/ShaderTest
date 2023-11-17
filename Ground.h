@@ -1,19 +1,16 @@
 #pragma once
 #include "Engine/GameObject.h"
 
-class Fbx;
-
-class Childoden :
-    public GameObject
-{
-    Fbx* pFbx;
-    int hModel_;//モデル番号
+//Groundを管理するクラス
+class Ground : public GameObject {
+private:
+    int hModel_;    // モデル番号
 public:
     //コンストラクタ
-    Childoden(GameObject* parent);
+    Ground(GameObject* parent);
 
     //デストラクタ
-    ~Childoden();
+    ~Ground();
 
     //初期化
     void Initialize() override;
@@ -27,4 +24,3 @@ public:
     //開放
     void Release() override;
 };
-

@@ -58,6 +58,8 @@
     <ClCompile Include="Engine\Texture.cpp">
       <Filter>01Engine\EngineObjects</Filter>
     </ClCompile>
+    <ClCompile Include="Ground.cpp" />
+    <ClCompile Include="Ball.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple2D.hlsl">
@@ -83,7 +85,6 @@
     <ClInclude Include="Engine\SphereCollider.h">
       <Filter>01Engine</Filter>
     </ClInclude>
-    <ClInclude Include="Childoden.h" />
     <ClInclude Include="Stage.h" />
     <ClInclude Include="TestScene.h" />
     <ClInclude Include="Engine\Camera.h">
@@ -110,6 +111,8 @@
     <ClInclude Include="Engine\Sprite.h">
       <Filter>01Engine\EngineObjects</Filter>
     </ClInclude>
+    <ClInclude Include="Ground.h" />
+    <ClInclude Include="Ball.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
