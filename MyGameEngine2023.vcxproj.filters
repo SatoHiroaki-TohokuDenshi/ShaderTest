@@ -60,6 +60,7 @@
     </ClCompile>
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Ball.cpp" />
+    <ClCompile Include="Arrow.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple2D.hlsl">
@@ -113,6 +114,7 @@
     </ClInclude>
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Ball.h" />
+    <ClInclude Include="Arrow.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

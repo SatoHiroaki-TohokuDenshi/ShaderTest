@@ -64,3 +64,7 @@ void Model::Release()
 	}
 	modelList.clear();
 }
+
+void Model::SetDifuse(int hModel, XMFLOAT4 f4) {
+	modelList[hModel]->pfbx_->SetDifuse(f4);
+}

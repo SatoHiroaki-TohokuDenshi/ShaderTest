@@ -17,5 +17,7 @@ namespace Model
 	void SetTransform(int hModel, Transform transform);
 	void Draw(int hModel);
 	void Release();
+
+	void SetDifuse(int hModel, XMFLOAT4 f4);
 }
 

@@ -285,3 +285,10 @@ void Fbx::Draw(Transform& transform)
 void Fbx::Release()
 {
 }
+
+void Fbx::SetDifuse(XMFLOAT4 f4) {
+	if (pMaterialList_->pTexture != nullptr)	return;
+	for (int i = 0; i < materialCount_; i++) {
+		pMaterialList_[i].diffuse = f4;
+	}
+}
