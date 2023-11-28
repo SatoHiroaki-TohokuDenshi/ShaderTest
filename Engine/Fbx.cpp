@@ -4,6 +4,8 @@
 #include "Camera.h"
 #include "Texture.h"
 
+const XMFLOAT4 LIGHT_POS{0, 0, -1, 1};
+
 Fbx::Fbx()
 	:vertexCount_(0), polygonCount_(0), materialCount_(0),
 	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),
@@ -67,7 +69,7 @@ void Fbx::InitVertex(fbxsdk::FbxMesh* mesh)
 	VERTEX* vertices = new VERTEX[vertexCount_];
 
 	//全ポリゴン
-	for (DWORD poly = 0; poly < polygonCount_; poly++)
+	for (DWORD poly = 0; (int)poly < polygonCount_; poly++)
 	{
 		//3頂点分
 		for (int vertex = 0; vertex < 3; vertex++)
@@ -127,7 +129,7 @@ void Fbx::InitIndex(fbxsdk::FbxMesh* mesh)
 	{
 		int count = 0;
 		//全ポリゴン
-		for (DWORD poly = 0; poly < polygonCount_; poly++)
+		for (DWORD poly = 0; (int)poly < polygonCount_; poly++)
 		{
 			//あるマテリアルを持ったポリゴンのリストをとってきて、頂点をリストアップ
 			FbxLayerElementMaterial* mtl = mesh->GetLayer(0)->GetMaterials();
@@ -240,9 +242,12 @@ void Fbx::Draw(Transform& transform)
 	{
 		//コンスタントバッファに情報を渡す
 		CONSTANT_BUFFER cb;
+		cb.matWorld = transform.GetWorldMatrix();
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
+		cb.lightDirection = LIGHT_POS;
+		XMStoreFloat4(&cb.eyePos, Camera::GetCameraPos());
 		cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 	
 		D3D11_MAPPED_SUBRESOURCE pdata;

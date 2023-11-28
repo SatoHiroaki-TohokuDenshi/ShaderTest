@@ -44,7 +44,7 @@ void Quad::Draw(Transform& transform) {
 	SetBufferToPipeline();
 
 	//描画
-	Direct3D::pContext_->DrawIndexed(index_.size(), 0, 0);
+	Direct3D::pContext_->DrawIndexed((UINT)index_.size(), 0, 0);
 }
 
 void Quad::Release() {
@@ -54,7 +54,7 @@ void Quad::Release() {
 }
 
 void Quad::InitVertexData() {
-	HRESULT hr;
+	//HRESULT hr;
 	// 頂点情報
 	vertices_ = {
 		{XMVectorSet(-1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.0f,  0.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f)},// 四角形の頂点（左上）
@@ -62,7 +62,7 @@ void Quad::InitVertexData() {
 		{XMVectorSet( 1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(1.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f)},// 四角形の頂点（右下）
 		{XMVectorSet(-1.0f, -1.0f, 0.0f, 0.0f), XMVectorSet(0.0f,  1.0f, 0.0f, 0.0f), XMVectorSet(0.0f, 0.0f, -1.0f, 0.0f)}	// 四角形の頂点（左下）		
 	};
-	vertexNum_ = vertices_.size();
+	vertexNum_ = (int)vertices_.size();
 }
 
 //頂点バッファを作成
@@ -90,7 +90,7 @@ void Quad::InitIndexData() {
 	index_ = { 0,2,3, 0,1,2 };
 
 	//インデックス数
-	indexNum_ = index_.size();
+	indexNum_ = (int)index_.size();
 }
 
 //インデックスバッファを作成
