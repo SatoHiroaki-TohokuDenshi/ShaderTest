@@ -242,12 +242,9 @@ void Fbx::Draw(Transform& transform)
 	{
 		//コンスタントバッファに情報を渡す
 		CONSTANT_BUFFER cb;
-		cb.matWorld = transform.GetWorldMatrix();
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
-		cb.lightDirection = LIGHT_POS;
-		XMStoreFloat4(&cb.eyePos, Camera::GetCameraPos());
 		cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 	
 		D3D11_MAPPED_SUBRESOURCE pdata;
