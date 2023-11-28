@@ -4,7 +4,7 @@
 #include "Camera.h"
 #include "Texture.h"
 
-const XMFLOAT4 LIGHT_POS{0, 0, -1, 1};
+const XMFLOAT4 LIGHT_POS{1, 0, 0, 1};
 
 Fbx::Fbx()
 	:vertexCount_(0), polygonCount_(0), materialCount_(0),
@@ -242,9 +242,12 @@ void Fbx::Draw(Transform& transform)
 	{
 		//コンスタントバッファに情報を渡す
 		CONSTANT_BUFFER cb;
+		cb.matWorld = transform.GetWorldMatrix();
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
+		XMStoreFloat4(&cb.eyePos, Camera::GetCameraPos());
+		cb.lightPos = LIGHT_POS;
 		cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 	
 		D3D11_MAPPED_SUBRESOURCE pdata;

@@ -26,9 +26,12 @@ class Fbx
 
 	struct CONSTANT_BUFFER
 	{
+		XMMATRIX	matWorld;		//ワールド行列
 		XMMATRIX	matWVP;			//ワールドビュープロジェクション行列
 		XMMATRIX	matNormal;		//法線を変形するための行列
 		XMFLOAT4	diffuseColor;	//拡散反射光の色
+		XMFLOAT4	eyePos;			//視線ベクトル
+		XMFLOAT4	lightPos;		//光源ベクトル
 		BOOL		isTextured;		//テクスチャがあるか
 	};
 
