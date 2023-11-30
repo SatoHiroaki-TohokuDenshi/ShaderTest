@@ -15,7 +15,7 @@ Stage::~Stage() {
 
 //‰Šú‰»
 void Stage::Initialize() {
-    Instantiate<Ground>(this);
+    //Instantiate<Ground>(this);
     Instantiate<Ball>(this);
 }
 

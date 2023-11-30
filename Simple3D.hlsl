@@ -83,13 +83,13 @@ float4 PS(VS_OUT inData) : SV_Target
 		//テクスチャ有り
 		diffuse = lightSource * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 		ambient = lightSource * g_texture.Sample(g_sampler, inData.uv) * ambentSource;
-		specular = lightSource * g_texture.Sample(g_sampler, inData.uv) * pow(clamp(dot(refLight, inData.eyeDir), 0, 1), a);
+		specular = lightSource * g_texture.Sample(g_sampler, inData.uv) * pow(dot(refLight, inData.eyeDir), a);
 	}
 	else {
 		//テクスチャ無し
 		diffuse = lightSource * diffuseColor * inData.color;
 		ambient = lightSource * diffuseColor * ambentSource;
-		specular = lightSource * diffuseColor * pow(clamp(dot(refLight, inData.eyeDir), 0, 1), a);
+		specular = lightSource * diffuseColor * pow(dot(refLight, inData.eyeDir), a);
 	}
 	return (diffuse + ambient + specular);
 }
