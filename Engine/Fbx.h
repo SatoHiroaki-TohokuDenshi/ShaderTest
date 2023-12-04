@@ -17,6 +17,8 @@ class Texture;
 
 class Fbx
 {
+	XMFLOAT4 lightPos_;
+
 	//ƒ}ƒeƒŠƒAƒ‹
 	struct MATERIAL
 	{
@@ -64,4 +66,5 @@ public:
 	void    Release();
 
 	void SetDifuse(XMFLOAT4 f4);
+	void SetLightPos(XMFLOAT3 f3);
 };

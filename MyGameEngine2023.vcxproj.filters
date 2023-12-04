@@ -61,6 +61,7 @@
     <ClCompile Include="Ground.cpp" />
     <ClCompile Include="Ball.cpp" />
     <ClCompile Include="Arrow.cpp" />
+    <ClCompile Include="MoveBall.cpp" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Simple2D.hlsl">
@@ -115,6 +116,7 @@
     <ClInclude Include="Ground.h" />
     <ClInclude Include="Ball.h" />
     <ClInclude Include="Arrow.h" />
+    <ClInclude Include="MoveBall.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -19,5 +19,6 @@ namespace Model
 	void Release();
 
 	void SetDifuse(int hModel, XMFLOAT4 f4);
+	void SetLightPos(int hModel, XMFLOAT3 f3);
 }
 

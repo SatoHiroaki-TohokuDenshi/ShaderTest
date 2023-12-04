@@ -24,7 +24,7 @@ void Ball::Initialize() {
 
 //XV
 void Ball::Update() {
-	//transform_.rotate_.y++;
+	transform_.rotate_.y++;
 }
 
 //•`‰æ

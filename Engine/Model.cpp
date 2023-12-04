@@ -68,3 +68,7 @@ void Model::Release()
 void Model::SetDifuse(int hModel, XMFLOAT4 f4) {
 	modelList[hModel]->pfbx_->SetDifuse(f4);
 }
+
+void Model::SetLightPos(int hModel, XMFLOAT3 f3) {
+	modelList[hModel]->pfbx_->SetLightPos(f3);
+}

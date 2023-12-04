@@ -2,6 +2,8 @@
 #include "Ball.h"
 #include "Ground.h"
 
+#include "MoveBall.h"
+
 //コンストラクタ
 Stage::Stage(GameObject* parent)
 	:GameObject(parent, "Stage")
@@ -17,6 +19,7 @@ Stage::~Stage() {
 void Stage::Initialize() {
 	//Instantiate<Ground>(this);
 	Instantiate<Ball>(this);
+	Instantiate<MoveBall>(this);
 }
 
 //更新

@@ -4,12 +4,12 @@
 #include "Camera.h"
 #include "Texture.h"
 
-const XMFLOAT4 LIGHT_POS{1, 0, 0, 1};
+const XMFLOAT4 LIGHT_POS{100, 0, 0, 1};
 
 Fbx::Fbx()
 	:vertexCount_(0), polygonCount_(0), materialCount_(0),
 	pVertexBuffer_(nullptr), pIndexBuffer_(nullptr), pConstantBuffer_(nullptr),
-	pMaterialList_(nullptr)
+	pMaterialList_(nullptr), lightPos_(LIGHT_POS)
 {
 }
 
@@ -242,7 +242,7 @@ void Fbx::Draw(Transform& transform)
 	{
 		//コンスタントバッファに情報を渡す
 		CONSTANT_BUFFER cb;
-		cb.matWorld = transform.GetWorldMatrix();
+		cb.matWorld = XMMatrixTranspose(transform.GetWorldMatrix());
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
@@ -296,4 +296,8 @@ void Fbx::SetDifuse(XMFLOAT4 f4) {
 	for (int i = 0; i < materialCount_; i++) {
 		pMaterialList_[i].diffuse = f4;
 	}
+}
+
+void Fbx::SetLightPos(XMFLOAT3 f3) {
+	lightPos_ = XMFLOAT4(f3.x, f3.y, f3.z, 0.0f);
 }

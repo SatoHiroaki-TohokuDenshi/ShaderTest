@@ -46,6 +46,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 
 	//ñ@ê¸ÇâÒì]
 	normal = mul(normal , matNormal);
+	normal = normalize(normal);
 
 	float4 light = normalize(lightPos);
 	light = normalize(light);
@@ -55,7 +56,7 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	outData.normal = normal;
 
 	float4 posWorld = mul(pos, matWorld);
-	outData.eyeDir = normalize(eyePos - posWorld);
+	outData.eyeDir = eyePos - posWorld;
 
 	//Ç‹Ç∆ÇﬂÇƒèoóÕ
 	return outData;
