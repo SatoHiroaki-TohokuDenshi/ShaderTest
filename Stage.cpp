@@ -4,7 +4,7 @@
 
 //コンストラクタ
 Stage::Stage(GameObject* parent)
-    :GameObject(parent, "Stage")
+	:GameObject(parent, "Stage")
 {
 }
 
@@ -15,8 +15,8 @@ Stage::~Stage() {
 
 //初期化
 void Stage::Initialize() {
-    //Instantiate<Ground>(this);
-    Instantiate<Ball>(this);
+	//Instantiate<Ground>(this);
+	Instantiate<Ball>(this);
 }
 
 //更新

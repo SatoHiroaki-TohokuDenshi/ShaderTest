@@ -3,7 +3,7 @@
 
 //コンストラクタ
 Ground::Ground(GameObject* parent)
-    :GameObject(parent, "Ground"), hModel_(-1)
+	:GameObject(parent, "Ground"), hModel_(-1)
 {
 }
 
@@ -14,9 +14,9 @@ Ground::~Ground() {
 
 //初期化
 void Ground::Initialize() {
-    // モデルの読み込み
-    hModel_ = Model::Load("Assets/Ground.fbx");
-    assert(hModel_ >= 0);
+	// モデルの読み込み
+	hModel_ = Model::Load("Assets/Ground.fbx");
+	assert(hModel_ >= 0);
 }
 
 //更新
@@ -26,8 +26,8 @@ void Ground::Update() {
 
 //描画
 void Ground::Draw() {
-    Model::SetTransform(hModel_, this->transform_);
-    Model::Draw(hModel_);
+	Model::SetTransform(hModel_, this->transform_);
+	Model::Draw(hModel_);
 }
 
 //開放

@@ -13,7 +13,7 @@ Texture::Texture()
 
 Texture::~Texture()
 {
-    Release();
+	Release();
 }
 
 HRESULT Texture::Load(string filename)
@@ -61,7 +61,7 @@ HRESULT Texture::Load(string filename)
 	}
 
 
-    return S_OK;
+	return S_OK;
 }
 
 void Texture::Release()
