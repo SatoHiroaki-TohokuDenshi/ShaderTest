@@ -45,15 +45,16 @@ VS_OUT VS(float4 pos : POSITION, float4 uv : TEXCOORD, float4 normal : NORMAL)
 	outData.uv = uv;
 
 	//法線を回転
+	normal.w = 0;
 	normal = mul(normal , matNormal);
 	normal = normalize(normal);
+
+	//法線を格納
+	outData.normal = normal;
 
 	float4 light = normalize(lightPos);
 	light = normalize(light);
 	outData.color = clamp(dot(normal, light), 0, 1);
-
-	//法線を格納
-	outData.normal = normal;
 
 	float4 posWorld = mul(pos, matWorld);
 	outData.eyeDir = eyePos - posWorld;
@@ -74,23 +75,19 @@ float4 PS(VS_OUT inData) : SV_Target
 	float4 ambient;		//環境光
 	float4 specular;	//鏡面反射光
 
-	float a = 8.0;
-
-	float4 normalLight = lightPos;
-	normalLight = normalize(normalLight);
-	float4 refLight = normalize(2 * inData.normal * clamp(dot(inData.normal, normalLight), 0, 1) - normalLight);
+	float4 normalLight = clamp(dot(inData.normal, normalize(lightPos)), 0, 1);
+	float4 ref = normalize(2 * normalLight * inData.normal - normalize(lightPos));
+	specular = pow(clamp(dot(ref, normalize(inData.eyeDir)), 0, 1), 8);
 
 	if (isTextured) {
 		//テクスチャ有り
 		diffuse = lightSource * g_texture.Sample(g_sampler, inData.uv) * inData.color;
 		ambient = lightSource * g_texture.Sample(g_sampler, inData.uv) * ambentSource;
-		specular = lightSource * g_texture.Sample(g_sampler, inData.uv) * pow(dot(refLight, inData.eyeDir), a);
 	}
 	else {
 		//テクスチャ無し
 		diffuse = lightSource * diffuseColor * inData.color;
 		ambient = lightSource * diffuseColor * ambentSource;
-		specular = lightSource * diffuseColor * pow(dot(refLight, inData.eyeDir), a);
 	}
 	return (diffuse + ambient + specular);
 }
