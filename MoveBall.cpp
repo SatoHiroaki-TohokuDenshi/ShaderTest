@@ -18,18 +18,30 @@ void MoveBall::Initialize() {
 	// ÉÇÉfÉãÇÃì«Ç›çûÇ›
 	hModel_ = Model::Load("Assets/Ball.fbx");
 	assert(hModel_ >= 0);
+
+	transform_.scale_ = XMFLOAT3(0.2f, 0.2f, 0.2f);
 }
 
 //çXêV
 void MoveBall::Update() {
 	const float move{ 0.1f };
 
-	if (Input::IsKey(DIK_RIGHT))	transform_.position_.x += move;
-	if (Input::IsKey(DIK_LEFT))		transform_.position_.x -= move;
-	if (Input::IsKey(DIK_UP))		transform_.position_.z += move;
-	if (Input::IsKey(DIK_DOWN))		transform_.position_.z -= move;
-
-	Model::SetLightPos(hModel_, transform_.position_);
+	if (Input::IsKey(DIK_RIGHT)) {
+		transform_.position_.x += move;
+		Model::SetLightPos(hModel_, transform_.position_);
+	}
+	if (Input::IsKey(DIK_LEFT)) {
+		transform_.position_.x -= move;
+		Model::SetLightPos(hModel_, transform_.position_);
+	}
+	if (Input::IsKey(DIK_UP)) {
+		transform_.position_.z += move;
+		Model::SetLightPos(hModel_, transform_.position_);
+	}
+	if (Input::IsKey(DIK_DOWN)) {
+		transform_.position_.z -= move;
+		Model::SetLightPos(hModel_, transform_.position_);
+	}
 }
 
 //ï`âÊ

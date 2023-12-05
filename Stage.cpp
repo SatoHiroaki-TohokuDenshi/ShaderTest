@@ -1,6 +1,5 @@
 #include "Stage.h"
-#include "Ball.h"
-#include "Ground.h"
+#include "Donuts.h"
 
 #include "MoveBall.h"
 
@@ -17,9 +16,8 @@ Stage::~Stage() {
 
 //‰Šú‰»
 void Stage::Initialize() {
-	//Instantiate<Ground>(this);
-	Instantiate<Ball>(this);
 	Instantiate<MoveBall>(this);
+	Instantiate<Donuts>(this);
 }
 
 //XV
