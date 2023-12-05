@@ -247,7 +247,7 @@ void Fbx::Draw(Transform& transform)
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
 		cb.diffuseColor = pMaterialList_[i].diffuse;
 		XMStoreFloat4(&cb.eyePos, Camera::GetCameraPos());
-		cb.lightPos = LIGHT_POS;
+		cb.lightPos = lightPos_;
 		cb.isTextured = pMaterialList_[i].pTexture != nullptr;
 	
 		D3D11_MAPPED_SUBRESOURCE pdata;
