@@ -22,8 +22,11 @@ class Fbx
 	//マテリアル
 	struct MATERIAL
 	{
-		Texture* pTexture;
-		XMFLOAT4 diffuse;
+		Texture*	pTexture;	// テクスチャ
+		XMFLOAT4	ambient;	// 環境光
+		XMFLOAT4	diffuse;	// 拡散反射
+		XMFLOAT4	specular;	// 鏡面反射
+		float		shininess;	// ハイライトの強さ
 	};
 
 	struct CONSTANT_BUFFER
@@ -31,7 +34,10 @@ class Fbx
 		XMMATRIX	matWorld;		//ワールド行列
 		XMMATRIX	matWVP;			//ワールドビュープロジェクション行列
 		XMMATRIX	matNormal;		//法線を変形するための行列
-		XMFLOAT4	diffuseColor;	//拡散反射光の色
+		XMFLOAT4	diffuse;		//拡散反射光の色
+		XMFLOAT4	ambient;		//環境光
+		XMFLOAT4	specular;		//鏡面反射
+		float		shininess;		//ハイライトの強度
 		XMFLOAT4	eyePos;			//視線ベクトル
 		XMFLOAT4	lightPos;		//光源ベクトル
 		BOOL		isTextured;		//テクスチャがあるか
@@ -58,6 +64,7 @@ class Fbx
 	void InitIndex(fbxsdk::FbxMesh* mesh);
 	void IntConstantBuffer();
 	void InitMaterial(fbxsdk::FbxNode* pNode);
+	void InitTexture(fbxsdk::FbxSurfaceMaterial* pMaterial, const int& i);
 public:
 
 	Fbx();

@@ -193,42 +193,53 @@ void Fbx::InitMaterial(fbxsdk::FbxNode* pNode)
 
 	for (int i = 0; i < materialCount_; i++)
 	{
-		//i番目のマテリアル情報を取得
+		// フォンシェーダー用クラスに一時格納
 		FbxSurfaceMaterial* pMaterial = pNode->GetMaterial(i);
+		FbxSurfacePhong* pPhong = (FbxSurfacePhong*)pMaterial;
 
-		//テクスチャ情報
-		FbxProperty  lProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+		// 各種要素を取得
+		FbxDouble3 ambient{ 0, 0, 0 };
+		FbxDouble3 diffuse{ 0, 0, 0 };
+		FbxDouble3 specular{ 0, 0, 0 };
+		ambient = pPhong->Ambient;
+		diffuse = pPhong->Diffuse;
 
-		//テクスチャの数数
-		int fileTextureCount = lProperty.GetSrcObjectCount<FbxFileTexture>();
+		pMaterialList_[i].ambient = { (float)ambient[0], (float)ambient[1] , (float)ambient[2] , 1.0f };
+		pMaterialList_[i].diffuse = { (float)diffuse[0], (float)diffuse[1] , (float)diffuse[2] , 1.0f };
+		pMaterialList_[i].specular = { 0, 0, 0, 0 };
+		pMaterialList_[i].shininess = 0;
 
-		//テクスチャあり
-		if (fileTextureCount)
-		{
-			FbxFileTexture* textureInfo = lProperty.GetSrcObject<FbxFileTexture>(0);
-			const char* textureFilePath = textureInfo->GetRelativeFileName();
-
-			//ファイル名+拡張だけにする
-			char name[_MAX_FNAME];	//ファイル名
-			char ext[_MAX_EXT];	//拡張子
-			_splitpath_s(textureFilePath, nullptr, 0, nullptr, 0, name, _MAX_FNAME, ext, _MAX_EXT);
-			wsprintf(name, "%s%s", name, ext);
-
-			//ファイルからテクスチャ作成
-			pMaterialList_[i].pTexture = new Texture;
-			HRESULT hr = pMaterialList_[i].pTexture->Load(name);
-			assert(hr == S_OK);
+		if (pMaterial->GetClassId().Is(FbxSurfacePhong::ClassId)) {
+			specular = pPhong->Specular;
+			pMaterialList_[i].specular = { (float)specular[0], (float)specular[1] , (float)specular[2] , 1.0f };
+			pMaterialList_[i].shininess = (float)pPhong->Shininess;
 		}
 
-		//テクスチャ無し
-		else
-		{
-			pMaterialList_[i].pTexture = nullptr;
-			//マテリアルの色
-			FbxSurfaceLambert* pMaterial = (FbxSurfaceLambert*)pNode->GetMaterial(i);
-			FbxDouble3  diffuse = pMaterial->Diffuse;
-			pMaterialList_[i].diffuse = XMFLOAT4((float)diffuse[0], (float)diffuse[1], (float)diffuse[2], 1.0f);
-		}
+		InitTexture(pMaterial, i);
+	}
+}
+
+void Fbx::InitTexture(fbxsdk::FbxSurfaceMaterial* pMaterial, const int& i) {
+	pMaterialList_[i].pTexture = nullptr;
+
+	// テクスチャ情報の取得
+	FbxProperty IProperty = pMaterial->FindProperty(FbxSurfaceMaterial::sDiffuse);
+	
+	// テクスチャの数
+	int fileTextureCount = IProperty.GetSrcObjectCount<FbxFileTexture>();
+
+	// テクスチャが見つかったら
+	if (fileTextureCount > 0) {
+		FbxFileTexture* texture = IProperty.GetSrcObject<FbxFileTexture>(0);
+
+		//ファイル名+拡張だけにする
+		char name[_MAX_FNAME];	//ファイル名
+		char ext[_MAX_EXT];	//拡張子
+		_splitpath_s(texture->GetRelativeFileName(), nullptr, 0, nullptr, 0, name, _MAX_FNAME, ext, _MAX_EXT);
+		wsprintf(name, "%s%s", name, ext);
+
+		pMaterialList_[i].pTexture = new Texture;
+		pMaterialList_[i].pTexture->Load(name);
 	}
 }
 
@@ -245,7 +256,10 @@ void Fbx::Draw(Transform& transform)
 		cb.matWorld = XMMatrixTranspose(transform.GetWorldMatrix());
 		cb.matWVP = XMMatrixTranspose(transform.GetWorldMatrix() * Camera::GetViewMatrix() * Camera::GetProjectionMatrix());
 		cb.matNormal = XMMatrixTranspose(transform.GetNormalMatrix());
-		cb.diffuseColor = pMaterialList_[i].diffuse;
+		cb.diffuse = pMaterialList_[i].diffuse;
+		cb.ambient = pMaterialList_[i].ambient;
+		cb.specular = pMaterialList_[i].specular;
+		cb.shininess = pMaterialList_[i].shininess;
 		XMStoreFloat4(&cb.eyePos, Camera::GetCameraPos());
 		cb.lightPos = lightPos_;
 		cb.isTextured = pMaterialList_[i].pTexture != nullptr;
